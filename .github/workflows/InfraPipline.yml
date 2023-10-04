@@ -33,7 +33,7 @@ on:
       SUBSCRIPTION_ID:
         description: 'Azure Subscription Id'
         required: true
-        default: '00000000-0000-0000-0000-000000000000'
+        default: 'cdf061dc-a659-4ff3-ba44-ab35210087a2'
 
       # Inialize the system
       # Note: We only want to run the KeyVault ARM template once.  If you keep re-running, then you will OVERWRITE your values
