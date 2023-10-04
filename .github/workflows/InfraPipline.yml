@@ -80,7 +80,7 @@ jobs:
     needs: Build
     runs-on: ubuntu-latest
     env:
-      resourceGroupName: '${{ github.event.inputs.RESOURCE_GROUP }}-Dev'
+      resourceGroupName: '${{ github.event.inputs.RESOURCE_GROUP }}'
       databricksWorkspaceName: '${{ github.event.inputs.WORKSPACE_NAME }}-Dev'
       keyVaultName: '${{ github.event.inputs.KEY_VAULT_NAME }}-Dev'
 
