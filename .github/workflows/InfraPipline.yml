@@ -9,7 +9,7 @@ on:
       RESOURCE_GROUP:
         description: 'Resource Group Name'
         required: true
-        default: 'Databricks-MyProject'
+        default: 'exampleRG'
 
       # The Azure region to which to deploy your resources
       LOCATION:
