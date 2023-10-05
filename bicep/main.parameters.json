@@ -33,7 +33,7 @@
         "value": "SqlMLOps@Admin1234"
       },
       "administratorLogin": {
-        "value": "CT-MLOPS-USERGROUP"
+        "value": "MLOPS-USERGROUP"
       },
       "administratorSid": {
         "value": "691d63e1-12ed-449f-9fe4-5f4b8f95149d"
