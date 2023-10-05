@@ -16,7 +16,14 @@
       },
       "region": {
         "value": "eus2"
-      }    
+      },
+      "machineLearningFriendlyName": {
+        "value": "This is Dev AML workspace"
+      },
+      "machineLearningDescription": {
+        "value": "AML Workspace"
+      }
+
     }
   }
   

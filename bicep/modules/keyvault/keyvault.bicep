@@ -6,14 +6,17 @@ PARAMETERS FOR AZURE KEY VAULT RESOURCE
 @description('The Azure Region to deploy the resources into')
 param location string = resourceGroup().location
 
-@description('Region for deployment of resource')
-param region string
+// @description('Region for deployment of resource')
+// param region string
 
 // @description('project name')
 // param project string 
 
 // @description('deployment environment for the resources')
 // param env string
+
+@description('name')
+param name string
 
 @description('Tags to add to the resources')
 param tag1 string 
@@ -25,7 +28,7 @@ param tag2 string
 var uniqueSuffix = substring(uniqueString(resourceGroup().id), 0, 2)
 
 @description('The name of the Key Vault')
-var keyvaultName = concat('kv-${region}-${uniqueSuffix}')
+var keyvaultName = concat('kv-${name}-${uniqueSuffix}')
 
 /*
 ------------------------------------------------------------------------------
