@@ -24,7 +24,7 @@
         "value": "AML Workspace"
       },
       "isSQLResourceExists": {
-        "value": true
+        "value": false
       },
       "sqlAdministratorLogin": {
         "value": "sqladmin"
