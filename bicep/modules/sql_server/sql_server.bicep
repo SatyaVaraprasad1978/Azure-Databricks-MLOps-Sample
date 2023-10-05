@@ -57,10 +57,10 @@ VARIABLES FOR AZURE SQL SERVER
 */
 
 @description('Name of the sql server')
-var sqlServerName = concat('ct-sqlserver-${name}')
+var sqlServerName = concat('sqlserver-${name}')
 
 @description('Name of the sql server database')
-var databaseName = '${sqlServerName}/ct-sqldb-${name}'
+var databaseName = '${sqlServerName}/sqldb-${name}'
 
 /*
 ------------------------------------------------------------------------------

@@ -58,7 +58,11 @@ param tenantId string = tenant().tenantId
 // Variables
 var name = concat('${project}-${region}-${env}')
 
-// Dependent resources for the Azure Machine Learning workspace
+/*
+------------------------------------------------------------------------------
+COMMON RESOURCES
+------------------------------------------------------------------------------
+*/
 
 // /*
 // --------------------------------------------------------------------------------------------------------
@@ -116,6 +120,12 @@ module keyvault './modules/keyvault/keyvault.bicep' = {
     tag2: tag2
   }
 }
+
+/*
+------------------------------------------------------------------------------
+AZURE MLOPS RESOURCES
+------------------------------------------------------------------------------
+*/
 
 /*
 ------------------------------------------------------------------------------
@@ -209,7 +219,11 @@ module azuremlWorkspace './modules/machinelearning/machinelearning.bicep' = {
   ]
 }
 
-
+/*
+------------------------------------------------------------------------------
+DATAOPS RESOURCES
+------------------------------------------------------------------------------
+*/
 
 /*
 ------------------------------------------------------------------------------
@@ -261,6 +275,59 @@ module sqlServerModuleinc './modules/sql_server_inc/sql_server_inc.bicep' = if(i
     administratorSid: administratorSid
     tenantId: tenantId
   }
+}
+
+/*
+------------------------------------------------------------------------------
+MODULE FOR CREATING DATA LAKE STORAGE
+------------------------------------------------------------------------------
+*/
+
+module DataLakeStorageModule './modules/data_lake/data_lake.bicep' = {
+  name: 'adl-${name}-deployment'
+    scope: resourceGroup()
+  params: {
+    location: location
+    name: name    
+    tag1: tag1
+    tag2: tag2
+    // project: project
+    // env: env
+    // region: region
+    subscriptionId: subscriptionId
+    resourceGroupName: resourceGroupName
+    managed_identity_name: UserIdentityDeploy.outputs.managed_identity_name
+
+  }
+}
+
+/*
+------------------------------------------------------------------------------
+MODULE FOR CREATING SYNAPSE WORKSPACE
+------------------------------------------------------------------------------
+*/
+
+module synapseModule './modules/synapse/synapse.bicep' = {
+  name: 'syn-${name}-deployment'
+  params: {
+    sqlAdministratorLogin: sqlAdministratorLogin
+    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
+    location: location    
+    tag1: tag1
+    tag2: tag2
+    name: name
+    // project: project
+    // env: env
+    // region: region
+    subscriptionId: subscriptionId
+    resourceGroupName: resourceGroupName
+    managed_identity_name: UserIdentityDeploy.outputs.managed_identity_name
+    adls_name: DataLakeStorageModule.outputs.adls_name
+    administratorSid: administratorSid
+  }
+  dependsOn: [
+    DataLakeStorageModule
+  ]
 }
 
 /*
