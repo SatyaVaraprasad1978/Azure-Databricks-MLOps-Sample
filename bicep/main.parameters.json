@@ -30,7 +30,7 @@
         "value": "sqladmin"
       },
       "sqlAdministratorLoginPassword": {
-        "value": "SqlMLOps@Admin1234"
+        "value": "xxxxxxxx"
       },
       "administratorLogin": {
         "value": "MLOPS-USERGROUP"
