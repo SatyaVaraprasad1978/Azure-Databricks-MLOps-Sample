@@ -6,6 +6,9 @@ PARAMETERS FOR AZURE MLOps RESOURCES
 ------------------------------------------------------------------------------
 */
 
+@description('Name of the Resource Group')
+param resourceGroupName string = resourceGroup().name
+
 @description('Azure region used for the deployment of all resources.')
 param location string = resourceGroup().location
 
@@ -30,6 +33,27 @@ param machineLearningFriendlyName string
 @description('Machine learning workspace description')
 param machineLearningDescription string
 
+
+@description('Value of the Subscription Id')
+param subscriptionId string = subscription().subscriptionId
+
+@description('Name of the sql login administrator')
+param administratorLogin string
+
+@description('Object Id of the service principle for sql login')
+param administratorSid string
+
+@description('The administrator username of the SQL logical server')
+param sqlAdministratorLogin string
+
+@description('The administrator password of the SQL logical server.')
+@secure()
+param sqlAdministratorLoginPassword string
+
+param isSQLResourceExists bool
+
+@description('Tenant Id')
+param tenantId string = tenant().tenantId
 
 // Variables
 var name = concat('${project}-${region}-${env}')
@@ -185,6 +209,59 @@ module azuremlWorkspace './modules/machinelearning/machinelearning.bicep' = {
   ]
 }
 
+
+
+/*
+------------------------------------------------------------------------------
+MODULE FOR CREATING INITIAL SQL SERVER AND DATABASE
+------------------------------------------------------------------------------
+*/
+
+module sqlServerModule './modules/sql_server/sql_server.bicep' = if(!isSQLResourceExists) {
+  name: 'sql-${name}-deployment'
+  params: {
+    sqlAdministratorLogin: sqlAdministratorLogin
+    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
+    location: location
+    name: name
+    tag1: tag1
+    tag2: tag2
+    // project: project
+    // env: env
+    subscriptionId: subscriptionId
+    resourceGroupName: resourceGroupName
+    managed_identity_name: UserIdentityDeploy.outputs.managed_identity_name
+    administratorLogin: administratorLogin
+    administratorSid: administratorSid
+    tenantId: tenantId
+}
+}
+
+/*
+------------------------------------------------------------------------------
+MODULE FOR CREATING INCREMENTAL SQL SERVER AND DATABASE
+------------------------------------------------------------------------------
+*/
+
+module sqlServerModuleinc './modules/sql_server_inc/sql_server_inc.bicep' = if(isSQLResourceExists) {
+  name: 'sqlinc-${name}-deployment'
+  params: {
+    sqlAdministratorLogin: sqlAdministratorLogin
+    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
+    location: location
+    name: name
+    tag1: tag1
+    tag2: tag2
+    // project: project
+    // env: env
+    subscriptionId: subscriptionId
+    resourceGroupName: resourceGroupName
+    managed_identity_name: UserIdentityDeploy.outputs.managed_identity_name
+    administratorLogin: administratorLogin
+    administratorSid: administratorSid
+    tenantId: tenantId
+  }
+}
 
 /*
 ------------------------------------------------------------------------------

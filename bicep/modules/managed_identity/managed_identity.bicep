@@ -19,7 +19,7 @@ param location string = resourceGroup().location
 @description('Tags to add to the resources')
 param tag1 string 
 
-@description('Tags to add to the resources')
+@description('name')
 param name string
 
 @description('Tags to add to the resources')

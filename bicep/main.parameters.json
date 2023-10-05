@@ -22,6 +22,21 @@
       },
       "machineLearningDescription": {
         "value": "AML Workspace"
+      },
+      "isSQLResourceExists": {
+        "value": true
+      },
+      "sqlAdministratorLogin": {
+        "value": "sqladmin"
+      },
+      "sqlAdministratorLoginPassword": {
+        "value": "SqlMLOps@Admin1234"
+      },
+      "administratorLogin": {
+        "value": "CT-MLOPS-USERGROUP"
+      },
+      "administratorSid": {
+        "value": "691d63e1-12ed-449f-9fe4-5f4b8f95149d"
       }
 
     }
