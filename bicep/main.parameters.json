@@ -14,12 +14,6 @@
       "tag2": {
         "value": "sample2"
       },
-      "machineLearningFriendlyName": {
-        "value": ""
-      },
-      "machineLearningDescription": {
-        "value": ""
-      },
       "region": {
         "value": "eus2"
       }    
