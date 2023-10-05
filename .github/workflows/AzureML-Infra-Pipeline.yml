@@ -62,7 +62,7 @@ jobs:
     - name: 'Publish Artifact: Bicep-Templates' 
       uses: actions/upload-artifact@v2
       with:
-        name: 'ARM-Templates'
+        name: 'Bicep-Templates'
         path: '${{ github.workspace }}/bicep'
                       
 
